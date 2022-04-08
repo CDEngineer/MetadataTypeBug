@@ -1,0 +1,38 @@
+@page "/bug-demo"
+@using CDE.MetadataTypeBug.Shared.Models
+
+<h2>Metadata Type Bug Demo</h2>
+
+<EditForm Model="@_collaborator" OnValidSubmit="@AddCollaborator">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    
+    <h4>First name</h4>
+    <p>This one is set in the "main" class, the validation works.</p>
+    <p><InputText id="FirstNameInputText" @bind-Value="_collaborator.FirstName" /></p>
+
+    <h4>Last name</h4>
+    <p>This one is set in the metadata class, the validation is broken.</p>
+    <p><InputText id="LastNameInputText" @bind-Value="_collaborator.LastName" /></p>
+    
+    <p><button type="submit">Save</button></p>
+</EditForm>
+
+<h4>@_feedback</h4>
+
+@code
+{
+    private List<Collaborator> _collaborators = new List<Collaborator>();
+    private Collaborator _collaborator = new Collaborator();
+    private string _feedback = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+    }
+
+    async Task AddCollaborator()
+    {
+        _collaborators.Add(_collaborator);
+        _feedback = "OK";
+    }
+}
